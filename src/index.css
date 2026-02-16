@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Utility: nicer tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Basic line clamp (so we don't need extra Tailwind plugins) */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@layer utilities {
+  .bg-farm-green-dark {
+    --tw-bg-opacity: 1;
+    background-color: rgb(27 94 32 / var(--tw-bg-opacity, 1));
+  }
+}
