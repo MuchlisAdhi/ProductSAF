@@ -4,22 +4,43 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@prisma/adapter-mariadb": "^6.19.2",
+    "@prisma/client": "^6.4.1",
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.10.0",
     "lucide-react": "^0.474.0",
+    "next": "^14.2.24",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
+    "sharp": "^0.33.5",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.13.4",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.3",
+    "prisma": "^6.4.1",
     "tailwindcss": "^3.4.17",
-    "vite": "^5.4.14"
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }
