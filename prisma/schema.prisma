@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  sessions  Session[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Session {
+  id               String   @id @default(cuid())
+  userId           String
+  refreshTokenHash String
+  expiresAt        DateTime
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  icon        String
+  orderNumber Int       @default(0)
+  products    Product[]
+}
+
+model Asset {
+  id               String    @id @default(cuid())
+  originalFileName String
+  systemPath       String
+  mimeType         String
+  size             Int
+  createdAt        DateTime  @default(now())
+  products         Product[]
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  code        String      @unique
+  name        String
+  description String      @db.Text
+  sackColor   String
+  categoryId  String
+  imageId     String?
+  category    Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  image       Asset?      @relation(fields: [imageId], references: [id], onDelete: SetNull)
+  nutritions  Nutrition[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([categoryId])
+  @@index([imageId])
+}
+
+model Nutrition {
+  id        String   @id @default(cuid())
+  productId String
+  label     String
+  value     String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
